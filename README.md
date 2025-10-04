@@ -42,22 +42,29 @@ In this project, PCA is used to:
 ## Method
 
 1. **Preprocessing**  
-   - Convert images to grayscale and resize them to a fixed resolution.  
-   - Flatten each image into a vector and assemble them into a data matrix \( X \).
+   - Convert all images to grayscale and resize them to a fixed resolution.  
+   - Flatten each image into a one-dimensional vector and stack them into a data matrix **X**,  
+     where each row represents one image.
 
 2. **Mean Face and Centering**  
-   - Compute the mean image vector \( \mu \).  
-   - Subtract \( \mu \) from each image to center the data.
+   - Compute the mean image vector **μ** (mu).  
+   - Center the data by subtracting the mean face from each image:  
+     **X_centered = X − μ**
 
 3. **PCA Computation**  
-   - Apply Singular Value Decomposition (SVD):  
-     \[
-     X = U \Sigma V^T
-     \]
-   - Columns of \( V \) correspond to eigenfaces.
+   - Perform **Singular Value Decomposition (SVD)** on the centered data:  
+     **X_centered = U · Σ · Vᵀ**  
+   - The columns of **V** (or rows of **Vᵀ**) are the **eigenfaces**,  
+     representing the main directions of variation in the dataset.  
+   - The singular values in **Σ** describe how much variance each eigenface explains.
 
 4. **Reconstruction**  
-   - Each image is approximated as a linear combination of the mean face and a few top eigenfaces.
+   - Each face can be approximated as a linear combination of the mean face and a small number of top eigenfaces:  
+
+     **xᵢ ≈ μ + a₁v₁ + a₂v₂ + ... + aₖvₖ**
+
+     where **aⱼ** are the projection coefficients of image *i* onto eigenface *vⱼ*.
+
 
 ---
 
@@ -114,3 +121,4 @@ All results are purely statistical and illustrative.
 
 ## Keywords
 PCA · Linear Algebra · Eigenfaces · Dimensionality Reduction · Image Analysis · Data Science
+
